@@ -10,7 +10,7 @@ class BasicAuth(Auth):
     Args:
         Auth (_type_): Authentication class to inherit.
     """
-    def extract_base64_authorization_header(self, 
+    def extract_base64_authorization_header(self,
                                             authorization_header: str) -> str:
         """Extract utf-8 format of the authorization header
 
@@ -21,7 +21,7 @@ class BasicAuth(Auth):
             str: utf-8 format of the authorization header
         """
         ah = authorization_header
-        if ah is None or isinstance(ah, str) == False:
+        if ah is None or isinstance(ah, str) is False:
             return None
         if not ah.startswith('Basic '):
             return None
