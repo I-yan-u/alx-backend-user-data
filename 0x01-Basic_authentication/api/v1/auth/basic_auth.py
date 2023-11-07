@@ -2,6 +2,8 @@
 """ Basic_auth implementation
 """
 from api.v1.auth.auth import Auth
+import base64
+import binascii
 
 
 class BasicAuth(Auth):
@@ -26,3 +28,23 @@ class BasicAuth(Auth):
         if not ah.startswith('Basic '):
             return None
         return ah[6:]
+
+    def decode_base64_authorization_header(
+            self,
+            base64_authorization_header: str) -> str:
+        """Decode base64 authorization header
+
+        Args:
+            base64_authorization_header (str): base64 authorization header
+
+        Returns:
+            str: utf-8 encoded base64 authorization header
+        """
+        bah = base64_authorization_header
+        if bah is None or not isinstance(bah, str):
+            return None
+        try:
+            res = base64.b64decode(bah, validate=True)
+            return res.decode('utf-8')
+        except (binascii.Error, UnicodeDecodeError):
+            return None
