@@ -43,7 +43,7 @@ def forbidden(error) -> str:
 def check_auth():
     """_summary_
     """
-    if auth == None:
+    if auth is None:
         return
     excluded_list = [
         '/api/v1/status/',
