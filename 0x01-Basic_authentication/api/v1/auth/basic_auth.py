@@ -64,7 +64,7 @@ class BasicAuth(Auth):
         if not bbah or not isinstance(bbah, str):
             return None, None
         if ':' in bbah:
-            email, password = bbah.split(':')
+            email, password = bbah.split(':', 1)
             return email, password
         else:
             return None, None
