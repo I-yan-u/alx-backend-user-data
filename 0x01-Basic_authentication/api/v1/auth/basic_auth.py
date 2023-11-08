@@ -79,13 +79,6 @@ class BasicAuth(Auth):
             user_email (str): User email
             user_pwd (str): User pwrd
         """
-
-    def user_object_from_credentials(
-            self,
-            user_email: str, user_pwd: str
-            ) -> TypeVar('User'):
-        """Get user object from provided credentials
-        """
         client = User()
         if user_email is None or not isinstance(user_email, str):
             return None
@@ -97,3 +90,17 @@ class BasicAuth(Auth):
             if client_s[0].is_valid_password(user_pwd):
                 return client_s[0]
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """populates auth with current user data
+        """
+        user_email, password = self.extract_user_credentials(
+                self.decode_base64_authorization_header(
+                    self.extract_base64_authorization_header(
+                        self.authorization_header(request)
+                    )
+                )
+            )
+        return self.user_object_from_credentials(
+            user_email, password
+        )
