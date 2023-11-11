@@ -19,6 +19,12 @@ if getenv('AUTH_TYPE', None) == 'basic_auth':
 elif getenv('AUTH_TYPE', None) == 'session_auth':
     from api.v1.auth.session_auth import SessionAuth
     auth = SessionAuth()
+# elif AUTH_TYPE == "session_exp_auth":
+#     from api.v1.auth.session_exp_auth import SessionExpAuth
+#     auth = SessionExpAuth()
+# elif AUTH_TYPE == "session_db_auth":
+#     from api.v1.auth.session_db_auth import SessionDBAuth
+#     auth = SessionDBAuth()
 else:
     from api.v1.auth.auth import Auth
     auth = Auth()
@@ -59,13 +65,16 @@ def check_auth():
         ]
     if not auth.require_auth(request.path, excluded_list):
         return
-    if auth.authorization_header(request) is None\
-        and auth.session_cookies(request) is None:
+
+    if auth.authorization_header(request) is None \
+            and auth.session_cookie(request) is None:
         abort(401)
-    if auth.current_user(request) is None:
+
+    current_user = auth.current_user(request)
+    if current_user is None:
         abort(403)
-    else:
-        request.current_user = auth.current_user(request)
+
+    request.current_user = current_user
 
 
 if __name__ == "__main__":
