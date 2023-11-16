@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""User model for auth service
+""" User model
 """
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
@@ -9,10 +9,7 @@ Base = declarative_base()
 
 
 class User(Base):
-    """User model for auth service
-
-    Args:
-        Base (sqlalchemy): sqlalchemy declarative base class
+    """ SQLAlchemy User model
     """
     __tablename__ = 'users'
 
@@ -21,3 +18,4 @@ class User(Base):
     hashed_password = Column(String(250), nullable=False)
     session_id = Column(String(250), nullable=True)
     reset_token = Column(String(250), nullable=True)
+    
