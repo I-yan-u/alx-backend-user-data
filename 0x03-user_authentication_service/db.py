@@ -59,7 +59,7 @@ class DB:
         if not user:
             raise NoResultFound("No user found")
         return user
-    
+
     def update_user(self, user_id: int, **kwargs) -> None:
         """Updates a users attributes
         """
