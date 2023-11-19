@@ -4,6 +4,7 @@
 from bcrypt import hashpw, gensalt, checkpw
 from db import DB
 from user import User
+from uuid import uuid4
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 
@@ -12,6 +13,14 @@ def _hash_password(password: str) -> bytes:
     """ Hash password
     """
     return hashpw(password.encode(), gensalt())
+
+
+def _generate_uuid() -> str:
+    """Generates a random uuid and returns it as a string
+    Returns:
+        str: string representation of the generated uuid
+    """
+    return str(uuid4())
 
 
 class Auth:
