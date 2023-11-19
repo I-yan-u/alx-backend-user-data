@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Basic Flasl app
+"""Basic Flask app
 """
 from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
-# from typing import Union
 
 
 AUTH = Auth()
