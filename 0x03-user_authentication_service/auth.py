@@ -39,3 +39,21 @@ class Auth:
             hashdpw = _hash_password(password)
             user = self._db.add_user(email=email, hashed_password=hashdpw)
             return user
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """Validates password and returns True if it matches
+
+        Args:
+            email (str): Provided email
+            password (str): Provided password
+
+        Returns:
+            bool: True if password matches else False
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            hashdpw = user.hashed_password
+            valid = checkpw(password.encode(), hashdpw)
+            return valid
+        except NoResultFound:
+            return False
